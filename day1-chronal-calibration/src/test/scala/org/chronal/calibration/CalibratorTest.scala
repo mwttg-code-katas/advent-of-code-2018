@@ -72,4 +72,19 @@ class CalibratorTest extends WordSpec with Matchers {
       }
     }
   }
+
+//  "Puzzle 2" must {
+//    val subject = new Calibrator
+//
+//    "calibrate the frequency" should {
+//      "get the current frequency" in {
+//        val input       = "+1, -2, +3, +1, +1, -2, +10"
+//        val stringArray = subject.readInput(input)
+//        val tuples      = subject.createTuples(stringArray)
+//        val startFrequency = Seq(0)
+//        val actual      = subject.calibrate2(startFrequency, tuples)
+//        actual shouldBe 2
+//      }
+//    }
+//  }
 }
