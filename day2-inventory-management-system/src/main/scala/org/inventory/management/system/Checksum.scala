@@ -28,4 +28,47 @@ class Checksum {
     val counts  = processIds(content)
     sumUp(counts)
   }
+
+  // -- Puzzle 2
+  // Well  :-S ugly as hell and not FP (no time)
+  // I'm really sorry
+
+  def puzzle2(filename: String) = {
+    val lines = readFile(filename).get
+    for (index <- 0 until 250) {
+      val line = lines(index)
+      for (toProofIndex <- index + 1 until 250) {
+        val proofLine = lines(toProofIndex)
+        val result    = proof(line, proofLine)
+        if (result.isDefined) {
+          println(s"$line -- $proofLine -- ${line diff proofLine}")
+        }
+
+        val result2 = proof2(line, proofLine)
+        if (result2.length == 1) {
+          println(s"** $line -- $proofLine -- ${result2(0)} --> ${line intersect proofLine}")
+        }
+      }
+    }
+  }
+
+  def proof(line: String, proofLine: String): Option[(String, String)] = {
+    val difference = line diff proofLine
+    if (difference.length > 1) return None
+    Some((line, proofLine))
+  }
+
+  def proof2(line: String, proofLine: String) = {
+    var result = Array.emptyCharArray
+
+    for (index <- 0 until line.length) {
+      val letter1 = line.charAt(index)
+      val letter2 = proofLine.charAt(index)
+
+      if (letter1 != letter2) {
+        result = result :+ letter1
+      }
+    }
+    result
+  }
 }
