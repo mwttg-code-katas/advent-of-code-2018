@@ -13,3 +13,6 @@ lazy val day1 = (project in file("day1-chronal-calibration"))
 
 lazy val day2 = (project in file("day2-inventory-management-system"))
     .settings(commonSettings)
+
+lazy val day3 = (project in file("day3-no-matter-how-you-slice-it"))
+    .settings(commonSettings)
