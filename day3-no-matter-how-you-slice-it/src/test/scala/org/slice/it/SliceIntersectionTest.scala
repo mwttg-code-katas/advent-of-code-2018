@@ -32,7 +32,7 @@ class SliceIntersectionTest extends WordSpec with Matchers {
       "extract an rectangle" in {
         val input  = Array("123", "3", "2", "8", "6")
         val actual = subject.createRectangleFrom(input)
-        actual shouldBe Rectangle(123, 3, 2, 8, 6)
+        actual shouldBe Rectangle(123, 3, 2, 11, 8)
       }
     }
 
@@ -50,6 +50,23 @@ class SliceIntersectionTest extends WordSpec with Matchers {
         val actual = rect1.isIntersecting(rect2)
         actual shouldBe false
       }
+      "check besides" in {
+    val rect1  = Rectangle(1, 1, 1, 2, 2)
+    val rect2  = Rectangle(2, 2, 1, 3, 2)
+    val actual = rect1.isIntersecting(rect2)
+    actual shouldBe false
+  }
+
+      "disassemble a rectangle" in {
+        val rect1 = Rectangle(1, 1, 1, 3, 3)
+        val actual = rect1.disassemble()
+        actual should contain allElementsOf Seq(
+          Rectangle(1, 1, 1, 2, 2),
+          Rectangle(1, 2, 1, 3, 2),
+          Rectangle(1, 1, 2, 2, 3), Rectangle(1, 2, 2, 3, 3))
+      }
+
+
       "calculate the intersection area (positive)" in {
         val rect1  = Rectangle(1, 1, 1, 10, 10)
         val rect2  = Rectangle(2, 5, 5, 15, 15)
