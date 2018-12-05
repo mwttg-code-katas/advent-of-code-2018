@@ -8,6 +8,9 @@ lazy val commonSettings = Seq(
   libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 )
 
+lazy val common = (project in file("common"))
+    .settings(commonSettings)
+
 lazy val day1 = (project in file("day1-chronal-calibration"))
   .settings(commonSettings)
 
