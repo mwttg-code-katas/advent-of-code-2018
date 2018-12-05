@@ -9,13 +9,16 @@ lazy val commonSettings = Seq(
 )
 
 lazy val common = (project in file("common"))
-    .settings(commonSettings)
+  .settings(commonSettings)
 
 lazy val day1 = (project in file("day1-chronal-calibration"))
   .settings(commonSettings)
+  .dependsOn(common)
 
 lazy val day2 = (project in file("day2-inventory-management-system"))
-    .settings(commonSettings)
+  .settings(commonSettings)
+  .dependsOn(common)
 
 lazy val day3 = (project in file("day3-no-matter-how-you-slice-it"))
-    .settings(commonSettings)
+  .settings(commonSettings)
+  .dependsOn(common)
