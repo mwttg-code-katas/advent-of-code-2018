@@ -22,3 +22,15 @@ lazy val day2 = (project in file("day2-inventory-management-system"))
 lazy val day3 = (project in file("day3-no-matter-how-you-slice-it"))
   .settings(commonSettings)
   .dependsOn(common)
+
+lazy val day4 = (project in file("day4-repose-record"))
+    .settings(commonSettings)
+    .dependsOn(common)
+
+lazy val day5 = (project in file("day5-alchemical-reduction"))
+    .settings(commonSettings)
+    .dependsOn(common)
+
+lazy val day6 = (project in file("day6-chronal-coordinates"))
+    .settings(commonSettings)
+    .dependsOn(common)
