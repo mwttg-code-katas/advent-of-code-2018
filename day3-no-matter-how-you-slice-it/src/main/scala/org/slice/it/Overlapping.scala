@@ -70,4 +70,57 @@ class Overlapping {
     println(s"There are `$result` overlapping claims")
   }
 
+  // -- Puzzle 2
+
+  def fillFieldPuzzle2dWith(rectangle: Rectangle, field: Array[Array[Int]]): Array[Array[Int]] = {
+    val result = field
+    for (x <- rectangle.left until rectangle.right) {
+      for (y <- rectangle.top until rectangle.bottom) {
+        result(x)(y) = rectangle.id
+      }
+    }
+    result
+  }
+
+  def fillPuzzle2(rectangles: Seq[Rectangle], field: Array[Array[Int]]): Array[Array[Int]] = {
+    var result = field
+    for (rect <- rectangles) {
+      result = fillFieldPuzzle2dWith(rect, result)
+    }
+    result
+  }
+
+  def getNotOverlappedClaims(field: Array[Array[Int]], rectangles: Seq[Rectangle]): Seq[Int] = {
+    var fullClaims = Seq.empty[Int]
+    for (rect <- rectangles) {
+      var overlapping = Seq.empty[Boolean]
+      for (x <- rect.left until rect.right) {
+        for (y <- rect.top until rect.bottom) {
+          overlapping = overlapping :+ (field(x)(y) == rect.id)
+        }
+      }
+      var full = true
+      for (item <- overlapping) {
+        if (!item) full = false
+      }
+      if (full) {
+        fullClaims = fullClaims :+ rect.id
+      }
+    }
+    fullClaims
+  }
+
+  def startPuzzle2(filename: String): Unit = {
+    val lines       = FileReader.read(filename).get
+    val definitions = createDefinitions(lines)
+    val rectangles  = createRectangles(definitions)
+    val max         = getMaxXY(rectangles)
+    val field       = createField(max)
+    val resultField = fillPuzzle2(rectangles, field)
+    val result      = getNotOverlappedClaims(resultField, rectangles)
+
+    println(s"The following claims do not overlap  `$result`.")
+    // println(resultField(998)(998))
+  }
+
 }
