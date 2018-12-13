@@ -35,6 +35,10 @@ lazy val day6 = (project in file("day6-chronal-coordinates"))
     .settings(commonSettings)
     .dependsOn(common)
 
-lazy val day7 = (project in file("day6-sum-of-its-parts"))
+lazy val day7 = (project in file("day7-sum-of-its-parts"))
+    .settings(commonSettings)
+    .dependsOn(common)
+
+lazy val day10 = (project in file("day10-the-stars-align"))
     .settings(commonSettings)
     .dependsOn(common)
