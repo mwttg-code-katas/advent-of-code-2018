@@ -34,3 +34,7 @@ lazy val day5 = (project in file("day5-alchemical-reduction"))
 lazy val day6 = (project in file("day6-chronal-coordinates"))
     .settings(commonSettings)
     .dependsOn(common)
+
+lazy val day7 = (project in file("day6-sum-of-its-parts"))
+    .settings(commonSettings)
+    .dependsOn(common)
