@@ -28,6 +28,37 @@ class Reduce {
     builder.replaceAllLiterally("_", "").mkString
   }
 
+  def reduceP2(line: String, reducer: Char) = {
+    val length  = line.length
+    val builder = new StringBuilder(line)
+    for (index <- 0 until length) { //- 1) {
+      val c1 = builder.charAt(index)
+      //   val c2 = builder.charAt(index + 1)
+
+      if (c1.toLower == reducer.toLower) { //} && c1.toLower == reducer) {
+        builder.setCharAt(index, '_')
+        //   builder.setCharAt(index + 1, '_')
+      }
+    }
+
+    builder.replaceAllLiterally("_", "").mkString
+  }
+
+  def reduceP22(line: String) = {
+    val length  = line.length
+    val builder = new StringBuilder(line)
+    for (index <- 0 until length - 1) {
+      val c1 = builder.charAt(index)
+      val c2 = builder.charAt(index + 1)
+
+      if (c1.toLower == c2.toLower && ((c1.isLower && c2.isUpper) || (c1.isUpper && c2.isLower))) {
+        builder.setCharAt(index, '_')
+        builder.setCharAt(index + 1, '_')
+      }
+    }
+    builder.replaceAllLiterally("_", "").mkString
+  }
+
   def reduce(data: Seq[Char]): Seq[Char] = {
     var result = data
     for (index <- 0 until (data.length - 1)) {

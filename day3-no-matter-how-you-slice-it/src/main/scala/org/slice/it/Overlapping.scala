@@ -23,10 +23,10 @@ class Overlapping {
       if (x > maxX) maxX = x
       if (y > maxY) maxY = y
     }
-    (maxX, maxY)
+    (maxX + 1, maxY + 1)
   }
 
-  def createField(maxXY: (Int, Int)): Array[Array[Int]] = Array.ofDim[Int](maxXY._1 + 1, maxXY._2 + 1)
+  def createField(maxXY: (Int, Int)): Array[Array[Int]] = Array.ofDim[Int](maxXY._1, maxXY._2)
 
   def fillFieldWith(rectangle: Rectangle, field: Array[Array[Int]]): Array[Array[Int]] = {
     val result = field
@@ -52,7 +52,7 @@ class Overlapping {
     for (x <- 0 until max._1) {
       for (y <- 0 until max._2) {
         if (field(x)(y) == 9)
-          count = count + 1
+          count = count
       }
     }
     count
@@ -76,8 +76,7 @@ class Overlapping {
     val result = field
     for (x <- rectangle.left to rectangle.right) {
       for (y <- rectangle.top to rectangle.bottom) {
-        val value = result(x)(y)
-        if (value == 0) result(x)(y) = 1 else result(x)(y) = 66666
+        result(x)(y) = rectangle.id
       }
     }
     result
