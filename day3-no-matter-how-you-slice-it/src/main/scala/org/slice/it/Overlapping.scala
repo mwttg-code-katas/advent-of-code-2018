@@ -26,12 +26,12 @@ class Overlapping {
     (maxX, maxY)
   }
 
-  def createField(maxXY: (Int, Int)): Array[Array[Int]] = Array.ofDim[Int](maxXY._1, maxXY._2)
+  def createField(maxXY: (Int, Int)): Array[Array[Int]] = Array.ofDim[Int](maxXY._1 + 1, maxXY._2 + 1)
 
   def fillFieldWith(rectangle: Rectangle, field: Array[Array[Int]]): Array[Array[Int]] = {
     val result = field
-    for (x <- rectangle.left until rectangle.right) {
-      for (y <- rectangle.top until rectangle.bottom) {
+    for (x <- rectangle.left to rectangle.right) {
+      for (y <- rectangle.top to rectangle.bottom) {
         val value = result(x)(y)
         if (value == 0) result(x)(y) = 1 else result(x)(y) = 9
       }
@@ -72,10 +72,21 @@ class Overlapping {
 
   // -- Puzzle 2
 
+  def fillFieldWith2(rectangle: Rectangle, field: Array[Array[Int]]): Array[Array[Int]] = {
+    val result = field
+    for (x <- rectangle.left to rectangle.right) {
+      for (y <- rectangle.top to rectangle.bottom) {
+        val value = result(x)(y)
+        if (value == 0) result(x)(y) = 1 else result(x)(y) = 66666
+      }
+    }
+    result
+  }
+
   def fillFieldPuzzle2dWith(rectangle: Rectangle, field: Array[Array[Int]]): Array[Array[Int]] = {
     val result = field
-    for (x <- rectangle.left until rectangle.right) {
-      for (y <- rectangle.top until rectangle.bottom) {
+    for (x <- rectangle.left to rectangle.right) {
+      for (y <- rectangle.top to rectangle.bottom) {
         result(x)(y) = rectangle.id
       }
     }
@@ -85,7 +96,7 @@ class Overlapping {
   def fillPuzzle2(rectangles: Seq[Rectangle], field: Array[Array[Int]]): Array[Array[Int]] = {
     var result = field
     for (rect <- rectangles) {
-      result = fillFieldPuzzle2dWith(rect, result)
+      result = fillFieldWith2(rect, result)
     }
     result
   }
@@ -94,8 +105,8 @@ class Overlapping {
     var fullClaims = Seq.empty[Int]
     for (rect <- rectangles) {
       var overlapping = Seq.empty[Boolean]
-      for (x <- rect.left until rect.right) {
-        for (y <- rect.top until rect.bottom) {
+      for (x <- rect.left to rect.right) {
+        for (y <- rect.top to rect.bottom) {
           overlapping = overlapping :+ (field(x)(y) == rect.id)
         }
       }
