@@ -1,40 +1,41 @@
 package org.marble.mania
 
-class Playboard(marbles: List[Int], currentMarble: Int) {
+final case class Playboard(marbles: List[Int] = List(0, 1), currentMarble: Int = 1, currentPlayer: Int = 2, maxPlayer: Int) {
 
-  // def insert(marble: Int): Playboard = {}
-
-  private[mania] def clockwise(marble: Int) = {
+  private[mania] def insert() = {
+    val newMarble = currentMarble + 1
+    val player = nextPlayer()
     val size              = marbles.size
     val index             = marbles.indexOf(currentMarble)
     val oneClockwiseIndex = oneClockwise(index, size)
-    val twoClockwiseIndex = twoClockwise(index, size)
+    // val twoClockwiseIndex = twoClockwise(index, size)
 
     if (oneClockwiseIndex == size - 1) {
-      marbles :+ marble
+      val marbleResult = marbles :+ newMarble
+      Playboard(marbleResult, newMarble, player, maxPlayer)
     } else {
       val split = marbles.splitAt(oneClockwiseIndex + 1)
-      (split._1 :+ marble) ++ split._2
+      val marbleResult = (split._1 :+ newMarble) ++ split._2
+      Playboard(marbleResult, newMarble, player, maxPlayer)
     }
 
   }
 
-  private def oneClockwise(index: Int, size: Int) = {
-    val result = index + 1
-    if (result >= size) {
-      result - size
+  private def nextPlayer() =
+    if (currentPlayer == maxPlayer) {
+      1
     } else {
-      result
+      currentPlayer + 1
     }
+
+  private def oneClockwise(index: Int, size: Int) = {
+    val newIndex = index + 1
+    correctIndex(newIndex)
   }
 
   private def twoClockwise(index: Int, size: Int) = {
-    val result = index + 2
-    if (result >= size) {
-      result - size
-    } else {
-      result
-    }
+    val newIndex = index + 2
+    correctIndex(newIndex)
   }
 
   private def correctIndex(index: Int) = {
