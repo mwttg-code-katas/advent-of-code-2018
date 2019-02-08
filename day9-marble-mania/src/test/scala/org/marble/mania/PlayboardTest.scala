@@ -27,7 +27,22 @@ class PlayboardTest extends WordSpec with Matchers {
       val subject = Playboard(marbles, 21, 3, 9)
       val actual = subject.insert()
       actual shouldBe Playboard(
-        List(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15), 22, 4, 9)
+        List(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15),
+        22,
+        4,
+        9
+      )
+      println(actual)
+    }
+    "insert 23" in {
+    val marbles = List(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15)
+    val subject = Playboard(marbles, 22, 4, 9)
+  }
+
+    "ttt" in {
+      val marbles = List(0, 16, 8, 17, 4, 18, 9, 19, 2, 20, 10, 21, 5, 22, 11, 1, 12, 6, 13, 3, 14, 7, 15)
+      val subject = Playboard(marbles, 22, 4, 9)
+      val actual  = subject.insert()
       println(actual)
     }
   }
