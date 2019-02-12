@@ -1,53 +1,55 @@
 package org.marble.mania
 
-final case class Playboard(marbles: List[Int] = List(0, 1), currentMarble: Int = 1, currentPlayer: Int = 2, maxPlayer: Int) {
+final case class Playboard(board: List[Int] = List(0, 1), marbleStatus: Marbles, playersStatus: Players) {
 
   private[mania] def insert() = {
-    val newMarble = currentMarble + 1
-    val player = nextPlayer()
-    val size              = marbles.size
-    val currentIndex = marbles.indexOf(currentMarble)
+    val size = board.size
+    val currentMarbleNumber = marbleStatus.currentMarbleNumber
 
 
     // val twoClockwiseIndex = twoClockwise(index, size)
 
-    if (multipleOfTwentyThree(newMarble)) {
-      insertMultipleOfTwentyThree(currentIndex, size, newMarble, player, maxPlayer)
+    if (multipleOfTwentyThree(currentMarbleNumber)) {
+      insertMultipleOfTwentyThree(size)
     } else {
-      insertRegular(currentIndex, size, newMarble, player)
+      insertRegular(size)
     }
   }
 
-  private def insertMultipleOfTwentyThree(index: Int, size: Int, newMarble: Int, player: Int, maxPlayer: Int) = {
-    val removeIndex           = sevenCounterClockwise(index, size)
-    val (front, back)         = marbles.splitAt(removeIndex)
-    val newMarbles            = front ++ back.tail
-    val newCurrentMarbleIndex = removeIndex
-    Playboard(newMarbles, newMarble, player, maxPlayer)
+  private def insertMultipleOfTwentyThree(size: Int) = {
+    val newMarbleIndex = sevenCounterClockwise(marbleStatus.lastIndex, size)
+    val (front, back) = board.splitAt(newMarbleIndex)
+    val marbleResult = front ++ back.tail
+
+    val newMarbleStatus = marbleStatus.next(newMarbleIndex)
+    val newPlayerStatus = playersStatus.nextPlayer()
+    Playboard(marbleResult, newMarbleStatus, newPlayerStatus)
   }
 
-  private def insertRegular(index: Int, size: Int, newMarble: Int, player: Int) = {
-    val oneClockwiseIndex = oneClockwise(index, size)
+  private def insertRegular(size: Int) = {
+    val currentIndex = marbleStatus.lastIndex
+    val currentMarbleNumber = marbleStatus.currentMarbleNumber
+    val oneClockwiseIndex = oneClockwise(currentIndex, size)
+
     if (oneClockwiseIndex == size - 1) {
-      val marbleResult = marbles :+ newMarble
-      Playboard(marbleResult, newMarble, player, maxPlayer)
+      val marbleResult = board :+ currentMarbleNumber
+      val newMarbleStatus = marbleStatus.next(oneClockwiseIndex + 1)
+      val newPlayerStatus = playersStatus.nextPlayer()
+
+      Playboard(marbleResult, newMarbleStatus, newPlayerStatus)
     } else {
-      val split        = marbles.splitAt(oneClockwiseIndex + 1)
-      val marbleResult = (split._1 :+ newMarble) ++ split._2
-      Playboard(marbleResult, newMarble, player, maxPlayer)
+      val split = board.splitAt(oneClockwiseIndex + 1)
+      val marbleResult = (split._1 :+ currentMarbleNumber) ++ split._2
+      val newMarbleStatus = marbleStatus.next(oneClockwiseIndex + 1)
+      val newPlayerStatus = playersStatus.nextPlayer()
+
+      Playboard(marbleResult, newMarbleStatus, newPlayerStatus)
     }
   }
 
   private def multipleOfTwentyThree(marble: Int) = {
     marble % 23 == 0
   }
-
-  private def nextPlayer() =
-    if (currentPlayer == maxPlayer) {
-      1
-    } else {
-      currentPlayer + 1
-    }
 
   private def sevenCounterClockwise(index: Int, size: Int) = {
     val newIndex = index - 7

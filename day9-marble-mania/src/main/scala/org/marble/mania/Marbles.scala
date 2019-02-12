@@ -1,13 +1,13 @@
 package org.marble.mania
 
-final case class Marbles(currentMarble: Int, currentIndex: Int) {
+final case class Marbles(currentMarbleNumber: Int = 2, lastIndex: Int = 0) {
   def next(): Marbles = {
-    val newCurrentMarble = currentMarble + 1
-    Marbles(newCurrentMarble, currentIndex)
+    val newCurrentMarbleNumber = currentMarbleNumber + 1
+    Marbles(newCurrentMarbleNumber, lastIndex)
   }
 
   def next(newIndex: Int): Marbles = {
-    val newCurrentMarble = currentMarble + 1
-    Marbles(newCurrentMarble, newIndex)
+    val newCurrentMarbleNumber = currentMarbleNumber + 1
+    Marbles(newCurrentMarbleNumber, newIndex)
   }
 }
