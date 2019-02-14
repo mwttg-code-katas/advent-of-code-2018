@@ -22,4 +22,13 @@ final case class Players(pointsPerPlayer: Map[Int, Int] = Map.empty, currentPlay
     val newPointsPerPlayer = pointsPerPlayer + (currentPlayer -> newPoints)
     Players(newPointsPerPlayer, currentPlayer)
   }
+
+  def printScore(currentMarbleNumber: Int): Unit = {
+    println(s"----Score after Marble number: $currentMarbleNumber")
+    pointsPerPlayer.foreach(entry => println(s"Player ${entry._1}  ---  Score ${entry._2}"))
+    println()
+  }
+
+  def highScore(): Int =
+    pointsPerPlayer.values.max
 }
